@@ -27,6 +27,7 @@ export default new Router({
                         requireAuth: true
                     }
                 },
+
                 {
                     path: '/library',
                     name: 'Library',
@@ -38,9 +39,19 @@ export default new Router({
             ]
         },
         {
+            path: '/',
+            name: 'index',
+            redirect: '/index',
+            component: AppIndex,
+            meta: {
+                requireAuth: true
+            }
+        },
+        {
             path: '/login',
             name: 'Login',
             component: Login
         }
+
     ]
 })
