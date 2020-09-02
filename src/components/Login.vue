@@ -11,7 +11,7 @@
         <!--flex弹性盒子模型，justify-content：主抽 -->
         <div align="center"  class="inner">
             <el-card style="width: 400px">
-                    <h3>系统登录</h3>
+                    <h2>系统登录</h2>
                 <table>
                     <tr>
                         <td>
@@ -32,7 +32,16 @@
                             <el-button style="width: 300px" type="primary" @click="login">登录</el-button>
                         </td>
                     </tr>
+
                 </table>
+                <tr>
+                    <!-- 占两行-->
+                    <td colspan="2">
+                        <!-- 点击事件的两种不同的写法v-on:click和 @click-->
+                        <!--<el-button style="width: 300px" type="primary" v-on:click="doLogin">登录</el-button>-->
+                        <h4 style="width: 300px"  @click="register">没有用户？<el-button @click="register" class="el-button--primary">注册</el-button></h4>
+                    </td>
+                </tr>
             </el-card>
         </div>
     </div>
@@ -72,6 +81,10 @@
                     // eslint-disable-next-line no-unused-vars
                     .catch(failResponse => {
                     })
+            },
+            register(){
+                var _this = this
+                _this.$router.replace('/register')
             }
         }
     }
@@ -109,7 +122,7 @@
     bottom: 0;
     margin: auto;
     width: 50vw;
-    height: 40vh;
+    height: 50vh;
 }
 
 .login_title {
