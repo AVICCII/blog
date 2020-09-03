@@ -9,13 +9,15 @@ var axios = require('axios')
 axios.defaults.baseURL = 'http://localhost:8443/api'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
-
+axios.defaults.withCredentials = true
 Vue.use(ElementUI)
 
 router.beforeEach((to, from, next) => {
         if (to.meta.requireAuth) {
-            if (store.state.user.username) {
-                next()
+            if (store.state.user) {
+                axios.get('/authentication').then(resp => {
+                    if (resp) next()
+                })
             } else {
                 next({
                     path: 'login',

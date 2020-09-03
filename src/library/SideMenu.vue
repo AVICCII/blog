@@ -44,6 +44,7 @@
             }
         },
         methods: {
+            // eslint-disable-next-line no-unused-vars
             handleSelect (key, keyPath) {
                 this.cid = key
                 this.$emit('indexSelect')
