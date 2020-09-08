@@ -27,7 +27,6 @@ export default new Router({
                         requireAuth: true
                     }
                 },
-
                 {
                     path: '/library',
                     name: 'Library',
@@ -64,16 +63,16 @@ export default new Router({
             meta: {
                 requireAuth: true
             },
-            // children: [
-            //     {
-            //         path: '/admin/dashboard',
-            //         name: 'Dashboard',
-            //         component: () => import('../src/components/admin/dashboard/admin/index'),
-            //         meta: {
-            //             requireAuth: true
-            //         }
-            //     }
-            // ]
+            children: [
+                {
+                    path: '/admin/dashboard',
+                    name: 'Dashboard',
+                    component: () => import('../src/components/admin/dashboard/admin/index'),
+                    meta: {
+                        requireAuth: true
+                    }
+                }
+            ]
         },
     ]
 })
@@ -109,7 +108,7 @@ export const createRouter = routes => new Router({
                 // {
                 //     path: '/jotter/article',
                 //     name: 'Article',
-                //     component: () => import('../components/jotter/ArticleDetails')
+                //     component: () => import('../src/components/jotter/ArticleDetails')
                 // },
                 // {
                 //     path: '/admin/content/editor',
@@ -143,20 +142,21 @@ export const createRouter = routes => new Router({
             meta: {
                 requireAuth: true
             },
-            // children: [
-            //     {
-            //         path: '/admin/dashboard',
-            //         name: 'Dashboard',
-            //         component: () => import('../src/components/admin/dashboard/admin/index'),
-            //         meta: {
-            //             requireAuth: true
-            //         }
-            //     }
-            // ]
+            children: [
+                {
+                    path: '/admin/dashboard',
+                    name: 'Dashboard',
+                    component: () => import('../src/components/admin/dashboard/admin/index'),
+                    meta: {
+                        requireAuth: true
+                    }
+                }
+            ]
         },
-        // {
-        //     path: '*',
-        //     component: () => import('../src/components/pages/Error404')
-        // }
+        {
+            path: '*',
+            component: () => import('../src/components/pages/Error404')
+        }
     ]
 })
+

@@ -13,6 +13,9 @@ axios.defaults.withCredentials = true
 Vue.use(ElementUI)
 
 router.beforeEach((to, from, next) => {
+    if (store.state.username && to.path.startsWith('/admin')) {
+        initAdminMenu(router, store)
+    }
         if (to.meta.requireAuth) {
             if (store.state.user) {
                 axios.get('/authentication').then(resp => {
@@ -29,6 +32,45 @@ router.beforeEach((to, from, next) => {
         }
     }
 )
+
+const initAdminMenu = (router, store) => {
+    // 防止重复触发加载菜单操作
+    if (store.state.adminMenus.length > 0) {
+        return
+    }
+    axios.get('/menu').then(resp => {
+        if (resp && resp.status === 200) {
+            var fmtRoutes = formatRoutes(resp.data.result)
+            router.addRoutes(fmtRoutes)
+            store.commit('initAdminMenu', fmtRoutes)
+        }
+    })
+}
+
+const formatRoutes = (routes) => {
+    let fmtRoutes = []
+    routes.forEach(route => {
+        if (route.children) {
+            route.children = formatRoutes(route.children)
+        }
+
+        let fmtRoute = {
+            path: route.path,
+            component: resolve => {
+                require(["./components/admin/" + route.component + '.vue'], resolve)
+            },
+            name: route.name,
+            nameZh: route.nameZh,
+            iconCls: route.iconCls,
+            meta: {
+                requireAuth: true
+            },
+            children: route.children
+        }
+        fmtRoutes.push(fmtRoute)
+    })
+    return fmtRoutes
+}
 
 /* eslint-disable no-new */
 new Vue({
